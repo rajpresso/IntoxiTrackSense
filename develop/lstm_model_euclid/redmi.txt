@@ -1,0 +1,76 @@
+# chmod +x run_all.sh
+
+train.py를 실행하지 않으려면
+./run_all.sh
+
+train.py를 실행하려면:
+./run_all.sh train
+
+
+일반인 데이터
+folder_path = "/home/alpaco/project/drunk_prj/data/normal_editted_Final"
+주취자 데이터 
+folder_path = "/home/alpaco/project/drunk_prj/data/croki_0넣기"
+테스트 데이터 
+folder_path = "/home/alpaco/project/drunk_prj/data/test_0넣기3"
+
+
+일반인 
+df.shape y=0 : (54224, 38) 
+주취자
+df.shape y=1 : (34580, 38) 
+테스트용 
+df.shape : (13741, 38) 
+
+3fps
+
+F1 Score: 0.97대 에서  0.96대 을 번갈아가는 현상으로  
+learning_rate"를 0.001에서 점차적으로  0.0004 변경함 
+
+아래 dir config 파일을 참조 
+머리 키포인트를 제외한 테스트 결과 
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-28_20-45_머리제외
+Adam 으로테스트
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-28_20-51_optim.Adam
+Best
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-28_20-46_best
+
+
+기존것은 y 값이 제거되지 않은 상태에서 학습시키는 오류가 있었고 
+
+수정후 평가한 자 
+시각화 자료와 config 자료는 각 폴더 안데 있고 
+폴더 명에 중요 다른 점만 적어놓았음. 
+-----------------
+스케일을 하지 않음
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-28_23-53_no_scaler
+스텐다드 스케일
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-28_23-57_std
+    Precision: 0.41
+    Recall: 0.88
+    F1 Score: 0.56
+    Accuracy: 0.56
+learning_rate를 0.00005 로 
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-05_lr0.0005
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-08_Normalizer
+ lstm 레이어를 2개 로 설정
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-14_num_layers_2
+    Precision: 0.46
+    Recall: 0.93
+    F1 Score: 0.61
+    Accuracy: 0.64
+ 히든 사이즈 256으로 
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-16_hidden_dim_256
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-18_drop_0.1
+기울기로만 17포인트로 측정 
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-36_기울기로만
+/home/alpaco/project/drunk_prj/models/rsj_model_euclid/models/saved_models/2024-11-29_00-49
+# Evaluation Results
+    Precision: 0.43
+    Recall: 0.92
+    F1 Score: 0.59
+    Accuracy: 0.60
+
+
+
+

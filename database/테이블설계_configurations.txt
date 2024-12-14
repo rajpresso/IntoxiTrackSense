@@ -1,0 +1,141 @@
+
+테이블 스키마 설계
+테이블 이름: configurations
+필드:
+
+id: Primary Key (자동 증가)
+config_path: 설정 파일 경로
+device: 사용 디바이스
+data_path: 데이터 파일 경로
+seq_length: 시퀀스 길이
+coordinate_cols: 좌표 데이터 열 리스트 (JSON 형식으로 저장)
+group_col: 그룹 컬럼 이름
+target_col: 타겟 컬럼 이름
+hidden_dim: LSTM Hidden Layer 크기
+num_layers: LSTM 레이어 수
+dropout: 드롭아웃 비율
+output_dim: 출력 크기
+test_size: 테스트 데이터 비율
+scaler: 스케일러 종류
+batch_size: 배치 크기
+epochs: 학습 에포크
+learning_rate: 학습률
+save_path: 모델 저장 경로
+model_name: 모델 파일 이름
+save_dir: 저장 디렉토리
+registered_at: 등록 날짜 및 시간 (자동 기록)
+SQL 코드
+sql
+코드 복사
+CREATE TABLE configurations (
+    id SERIAL PRIMARY KEY,
+    config_path TEXT,
+    device TEXT,
+    data_path TEXT,
+    seq_length INTEGER,
+    coordinate_cols JSON,
+    group_col TEXT,
+    target_col TEXT,
+    hidden_dim INTEGER,
+    num_layers INTEGER,
+    dropout FLOAT,
+    output_dim INTEGER,
+    test_size FLOAT,
+    scaler TEXT,
+    batch_size INTEGER,
+    epochs INTEGER,
+    learning_rate FLOAT,
+    save_path TEXT,
+    model_name TEXT,
+    save_dir TEXT,
+    registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+Python 코드로 데이터 삽입
+아래는 제공된 데이터를 Python 코드로 데이터베이스에 삽입하는 예제입니다.
+
+python
+코드 복사
+import psycopg2
+import json
+from datetime import datetime
+
+# 데이터베이스 연결 정보
+db_config = {
+    'dbname': 'your_db_name',
+    'user': 'your_user',
+    'password': 'your_password',
+    'host': 'your_host',
+    'port': 'your_port'
+}
+
+# 제공된 설정 데이터
+config_data = {
+    "config_path": "./config/config.py",
+    "device": "cuda:1",
+    "data_path": "/home/alpaco/project/drunk_prj/models/rsj_model_euclid/testdata/618-8_cam01_drunken01_place03_night_spring_4102_4957_totter.csv",
+    "seq_length": 30,
+    "coordinate_cols": ['xm', 'ym', 'm1', 's1', 'm2', 's2', 'm3', 's3', 'm4', 's4', 'm5', 's5', 'm6', 's6', 'm7', 's7', 'm8', 's8', 'm9', 's9', 'm10', 's10', 'm11', 's11', 'm12', 's12', 'm13', 's13', 'm14', 's14', 'm15', 's15', 'm16', 's16', 'm17', 's17', 'y'],
+    "group_col": "label",
+    "target_col": "y",
+    "hidden_dim": 128,
+    "num_layers": 1,
+    "dropout": 0.0,
+    "output_dim": 1,
+    "test_size": 0.2,
+    "scaler": "std",
+    "batch_size": 32,
+    "epochs": 5,
+    "learning_rate": 0.001,
+    "save_path": "./models/saved_models",
+    "model_name": "lstm_model.pth",
+    "save_dir": "./models/saved_models"
+}
+
+# 데이터베이스에 데이터 삽입
+try:
+    conn = psycopg2.connect(**db_config)
+    cursor = conn.cursor()
+    
+    insert_query = """
+    INSERT INTO configurations (
+        config_path, device, data_path, seq_length, coordinate_cols, group_col, target_col,
+        hidden_dim, num_layers, dropout, output_dim, test_size, scaler, batch_size,
+        epochs, learning_rate, save_path, model_name, save_dir
+    ) VALUES (
+        %s, %s, %s, %s, %s, %s, %s,
+        %s, %s, %s, %s, %s, %s, %s,
+        %s, %s, %s, %s, %s
+    )
+    """
+    
+    cursor.execute(insert_query, (
+        config_data["config_path"], 
+        config_data["device"], 
+        config_data["data_path"], 
+        config_data["seq_length"], 
+        json.dumps(config_data["coordinate_cols"]), 
+        config_data["group_col"], 
+        config_data["target_col"], 
+        config_data["hidden_dim"], 
+        config_data["num_layers"], 
+        config_data["dropout"], 
+        config_data["output_dim"], 
+        config_data["test_size"], 
+        config_data["scaler"], 
+        config_data["batch_size"], 
+        config_data["epochs"], 
+        config_data["learning_rate"], 
+        config_data["save_path"], 
+        config_data["model_name"], 
+        config_data["save_dir"]
+    ))
+    
+    conn.commit()
+    print("Data inserted successfully!")
+except Exception as e:
+    print(f"Error: {e}")
+finally:
+    cursor.close()
+    conn.close()
+위 코드는 데이터베이스 테이블 생성과 데이터 삽입 과정을 포함합니다. 데이터베이스 설정을 알맞게 변경한 후 실행하세요.

@@ -1,0 +1,29 @@
+query: SELECT data FROM csv_data WHERE version = %s AND category = %s 
+y = 0 데이터 import 완료 
+version:3.0, category : normal 
+df.shape y=0 : (54224, 38) 
+query: SELECT data FROM csv_data WHERE version = %s AND category = %s 
+y= 1 데이터 import 완료 
+version:2.0, category : croki 
+df.shape y=1 : (34580, 38) 
+center_node
+transform_keypoints
+create_sequences
+Coordinate columns: ['m1', 's1', 'm2', 's2', 'm3', 's3', 'm4', 's4', 'm5', 's5', 'm6', 's6', 'm7', 's7', 'm8', 's8', 'm9', 's9', 'm10', 's10', 'm11', 's11', 'm12', 's12', 'm13', 's13', 'm14', 's14', 'm15', 's15', 'm16', 's16', 'm17', 's17', 'y']
+Target column: y
+Label column: label
+filename column: filename
+Data columns: ['m1', 's1', 'm2', 's2', 'm3', 's3', 'm4', 's4', 'm5', 's5', 'm6', 's6', 'm7', 's7', 'm8', 's8', 'm9', 's9', 'm10', 's10', 'm11', 's11', 'm12', 's12', 'm13', 's13', 'm14', 's14', 'm15', 's15', 'm16', 's16', 'm17', 's17', 'label', 'filename', 'y', 'xm', 'ym']
+Using columns for sequences: ['m1', 's1', 'm2', 's2', 'm3', 's3', 'm4', 's4', 'm5', 's5', 'm6', 's6', 'm7', 's7', 'm8', 's8', 'm9', 's9', 'm10', 's10', 'm11', 's11', 'm12', 's12', 'm13', 's13', 'm14', 's14', 'm15', 's15', 'm16', 's16', 'm17', 's17', 'y']
+Traceback (most recent call last):
+  File "/home/alpaco/project/drunk_prj/models/rsj_model_euclid/train.py", line 149, in <module>
+    train()
+  File "/home/alpaco/project/drunk_prj/models/rsj_model_euclid/train.py", line 86, in train
+    X_seq, y_seq = create_sequences(mdf, seq_length)
+  File "/home/alpaco/project/drunk_prj/models/rsj_model_euclid/util/util.py", line 100, in create_sequences
+    group = group.sort_values(by=['frame']).reset_index(drop=True)
+  File "/home/alpaco/anaconda3/envs/rsj-01/lib/python3.9/site-packages/pandas/core/frame.py", line 7189, in sort_values
+    k = self._get_label_or_level_values(by[0], axis=axis)
+  File "/home/alpaco/anaconda3/envs/rsj-01/lib/python3.9/site-packages/pandas/core/generic.py", line 1911, in _get_label_or_level_values
+    raise KeyError(key)
+KeyError: 'frame'

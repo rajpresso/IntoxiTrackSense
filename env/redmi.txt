@@ -1,0 +1,14 @@
+
+conda env create --file ./env/environment.yml --name [새환경이름]
+
+or
+
+conda env update --file ./env/environment.yml
+
+or
+
+conda env create --file ./env/environment.yml
+
+
+
+
