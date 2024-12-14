@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>모니터링 시스템</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .content-wrapper {
+        padding: 0 40px;
+      }
+
+      .monitor-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .monitor-box {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 20px;
+        min-height: 300px;
+      }
+
+      video {
+        width: 100%;
+        height: auto;
+      }
+
+      .upload-box {
+        background-color: #f8f9fa;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+
+      .upload-btn {
+        background-color: #94b49f;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .log-box {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 15px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .log-entry {
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="monitoringPage" class="container-fluid">
+      <div class="content-wrapper">
+        <!-- 파일 업로드 -->
+        <div class="upload-box">
+          <div class="upload-section">
+            <div class="file-input-section">
+              <input
+                type="file"
+                id="videoInput1"
+                accept="video/*"
+                class="form-control"
+              />
+              <div id="fileName1"></div>
+            </div>
+            <button onclick="startProcessing()" class="upload-btn">
+              AI 처리 시작
+            </button>
+          </div>
+        </div>
+
+        <!-- 모니터 화면 -->
+        <div class="monitor-grid">
+          <!-- 처리 결과 영상 -->
+          <div class="monitor-box">
+            <h5>처리된 영상</h5>
+            <video id="video1" controls loop autoplay muted>
+              동영상이 로드되지 않습니다.
+            </video>
+          </div>
+
+          <!-- 고정 영상들 -->
+          <div class="monitor-box">
+            <h5>영상 1</h5>
+            <video id="video2" controls loop autoplay muted>
+              <source src="/static/uploads/A_h264.mp4" type="video/mp4" />
+              동영상이 로드되지 않습니다.
+            </video>
+          </div>
+          <div class="monitor-box">
+            <h5>영상 2</h5>
+            <video id="video3" controls loop autoplay muted>
+              <source src="/static/uploads/B_h264.mp4" type="video/mp4" />
+              동영상이 로드되지 않습니다.
+            </video>
+          </div>
+          <div class="monitor-box">
+            <h5>영상 3</h5>
+            <video id="video4" controls loop autoplay muted>
+              <source src="/static/uploads/C_h264.mp4" type="video/mp4" />
+              동영상이 로드되지 않습니다.
+            </video>
+          </div>
+        </div>
+
+        <!-- 이벤트 로그 -->
+        <div class="monitor-box">
+          <h5>이벤트 로그</h5>
+          <div id="eventLog" class="log-box">
+            <!-- 로그가 여기에 표시됩니다. -->
+            <div class="log-entry">이벤트 로그가 여기에 표시됩니다.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      async function startProcessing() {
+        const input = document.getElementById("videoInput1");
+        if (!input.files[0]) {
+          alert("파일을 선택하세요.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", input.files[0]);
+
+        try {
+          const response = await fetch("/process-video", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            if (result.processed_video_url) {
+              // 수정된 alert: result.processed_video_url을 올바르게 참조
+              //alert(`AI 처리 완료! 처리된 동영상 URL: ${result.processed_video_url}`);
+
+              const video = document.getElementById("video1");
+              video.src = result.processed_video_url;
+              video.load();
+
+              // 비디오가 로드된 후 재생 시도
+              video.play().catch((error) => {
+                console.error("재생 실패:", error);
+                // 필요시 사용자에게 재생 버튼을 제공
+              });
+
+              // 음소거 설정
+              video.muted = true;
+
+              // 이벤트 로그 표시
+              displayEventLogs(result.event_logs);
+            } else if (result.error) {
+              alert(`AI 처리 실패: ${result.error}`);
+            }
+          } else {
+            const errorResult = await response.json();
+            alert(`AI 처리 실패: ${errorResult.error || '알 수 없는 오류'}`);
+          }
+        } catch (error) {
+          console.error(error);
+          alert("서버 연결 실패!");
+        }
+      }
+
+      function displayEventLogs(eventLogs) {
+        const logContainer = document.getElementById("eventLog");
+        logContainer.innerHTML = ""; // 기존 로그 초기화
+
+        const eventDescriptions = {
+          intoxicated_person_appeared: "주취자 등장",
+          intoxicated_person_touched_car: "주취자와 차량 접촉",
+          intoxicated_person_overlap_open_driver_seat: "주취자 차량 탑승",
+          car_started_moving: "음주차량 출발"
+        };
+
+        for (const [event, frame] of Object.entries(eventLogs)) {
+          const logEntry = document.createElement("div");
+          logEntry.classList.add("log-entry");
+          
+          if (frame !== null && frame !== undefined) {
+            logEntry.textContent = `${eventDescriptions[event]}: 프레임 ${frame}`;
+          } else {
+            logEntry.textContent = `${eventDescriptions[event]}: 발생하지 않음`;
+          }
+
+          logContainer.appendChild(logEntry);
+        }
+      }
+    </script>
+  </body>
+</html>
