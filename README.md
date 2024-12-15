@@ -58,8 +58,7 @@
 LSTM, BERT, Transformer 모델에 같은 데이터셋을 사용하여 결과를 비교한 결과,  
 Transformer의 F1 Score가 0.72로 다른 모델의 성능보다 높음을 확인하였습니다.
 
-![주취자 행동 모델 비교]
-(images/flower/track.png)
+![주취자 행동 모델 비교](images/flower/track.png)
 
 ---
 
