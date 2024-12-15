@@ -9,7 +9,7 @@
 <div align="center">
 <img src="images/icon/ubuntu1.png" alt="Ubuntu" width="100px" style="margin: 10px;">
 <img src="images/icon/python1.png" alt="Python" width="100px" style="margin: 10px;">
-<img src="images/icon/pytorch1.png" alt="PyTorch" width="100px" style="margin: 10px;">
+<img src="images/icon/pytorch2.png" alt="PyTorch" width="100px" style="margin: 10px;">
 <img src="images/icon/mysql.png" alt="MySQL" width="100px" style="margin: 10px;">
 <img src="images/icon/fastapi.png" alt="FastAPI" width="150px" style="margin: 10px;">
 </div>
@@ -27,7 +27,7 @@
 컴퓨터 비전과 딥러닝 기술을 활용하여 영상(CCTV)에서 주취행동(술에 취한 행동)과 차량을 탐지하고,  
 **주취자가 차량을 탑승하는 행위를 감지**하는 모델을 개발하였습니다.  
 
-![주취자 차량 탑승 ](images/flower/01.png)
+![주취자 차량 탑승 ](images/flower/model.png)
 
 ---
 
@@ -58,7 +58,7 @@ LSTM, BERT, Transformer 모델에 같은 데이터셋을 사용하여 결과를 
 Transformer의 F1 Score가 0.72로 다른 모델의 성능보다 높음을 확인하였습니다.
 
 ![주취자 행동 모델 비교]
-(images/flower/02.png)
+(images/flower/track.png)
 
 ---
 
@@ -90,7 +90,7 @@ Transformer의 F1 Score가 0.72로 다른 모델의 성능보다 높음을 확�
   - **IOU(Intersection Over Union)** 값을 계산하여 주취자와 차량 간 상호작용을 추적.  
   - 차량의 이동 경로를 분석하여 주취자가 차량에 탑승하는 상황을 인지할 수 있는 시스템을 구현.
 
-![프로세스 다이어그램](https://prod-files-secure.s3.us-west-2.amazonaws.com/7cc4cfe2-1aa0-43f3-96dc-30024b084d03/ecb26d95-cb7d-4a07-9d32-7a5c91629a29/image.png)
+![프로세스 다이어그램](images/flower/web.png)
 
 ---
 
