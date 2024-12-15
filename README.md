@@ -12,11 +12,11 @@
 <img src="images/icon/pytorch2.png" alt="PyTorch" width="100px" style="margin: 10px;">
 <img src="images/icon/mysql.png" alt="MySQL" width="100px" style="margin: 10px;">
 <img src="images/icon/fastapi.png" alt="FastAPI" width="200px" style="margin: 10px;">
-<img src="images/icon/github.png" alt="GitHub" width="210px" style="margin: 10px;">
-<img src="images/icon/jupyter.png" alt="Jupyter" width="95px" style="margin: 20px;">
+
 </div>
 <div align="left">
-
+<img src="images/icon/github.png" alt="GitHub" width="210px" style="margin: 10px;">
+<img src="images/icon/jupyter.png" alt="Jupyter" width="95px" style="margin: 20px;">
 <img src="images/icon/anaconda.png" alt="Anaconda" width="200px" style="margin: 10px;">
 <img src="images/icon/vscode.png" alt="VS Code" width="200px" style="margin: 10px;">
 </div>
