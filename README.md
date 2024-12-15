@@ -6,15 +6,16 @@
   
 # 사용 기술
 
-<div align="center">
+<div align="left">
 <img src="images/icon/ubuntu1.png" alt="Ubuntu" width="100px" style="margin: 10px;">
 <img src="images/icon/python1.png" alt="Python" width="100px" style="margin: 10px;">
 <img src="images/icon/pytorch2.png" alt="PyTorch" width="100px" style="margin: 10px;">
 <img src="images/icon/mysql.png" alt="MySQL" width="100px" style="margin: 10px;">
 <img src="images/icon/fastapi.png" alt="FastAPI" width="150px" style="margin: 10px;">
-</div>
-<div align="center">
 <img src="images/icon/github.png" alt="GitHub" width="210px" style="margin: 10px;">
+</div>
+<div align="left">
+
 <img src="images/icon/jupyter.png" alt="Jupyter" width="100px" style="margin: 10px;">
 <img src="images/icon/anaconda.png" alt="Anaconda" width="200px" style="margin: 10px;">
 <img src="images/icon/vscode.png" alt="VS Code" width="200px" style="margin: 10px;">
